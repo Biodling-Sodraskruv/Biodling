@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biodlingsschema – Från 1 till 3 samhällen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --honey: #D4920B;
+    --honey-light: #F5DEB3;
+    --honey-glow: #FFF3D4;
+    --comb: #E8C547;
+    --dark: #2C1810;
+    --warm-brown: #5C3A1E;
+    --cream: #FFF9F0;
+    --green: #4A7C3F;
+    --green-light: #E8F2E5;
+    --heather: #8B5E8B;
+    --heather-light: #F0E4F0;
+    --alert: #C0392B;
+    --alert-light: #FDECEA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 1rem; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--warm-brown) 100%);
+    color: var(--cream);
+    padding: 3rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212,146,11,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.5px;
+  }
+
+  .hero .bee-icon { font-size: 1.8rem; margin-right: 0.5rem; }
+
+  .hero .subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.85;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-stat .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--comb);
+  }
+
+  .hero-stat .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .phase {
+    margin-bottom: 2rem;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--honey);
+  }
+
+  .phase-number {
+    width: 36px;
+    height: 36px;
+    background: var(--honey);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--warm-brown);
+  }
+
+  .phase-dates {
+    font-size: 0.8rem;
+    color: var(--honey);
+    font-weight: 600;
+  }
+
+  .week-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid var(--honey);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .week-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .week-card.action {
+    border-left-color: var(--green);
+    background: linear-gradient(135deg, white 85%, var(--green-light));
+  }
+
+  .week-card.critical {
+    border-left-color: var(--alert);
+    background: linear-gradient(135deg, white 85%, var(--alert-light));
+  }
+
+  .week-card.heather {
+    border-left-color: var(--heather);
+    background: linear-gradient(135deg, white 85%, var(--heather-light));
+  }
+
+  .week-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--honey);
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .week-card.action .week-label { color: var(--green); }
+  .week-card.critical .week-label { color: var(--alert); }
+  .week-card.heather .week-label { color: var(--heather); }
+
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-action { background: var(--green-light); color: var(--green); }
+  .badge-check { background: var(--honey-glow); color: var(--honey); }
+  .badge-critical { background: var(--alert-light); color: var(--alert); }
+  .badge-heather { background: var(--heather-light); color: var(--heather); }
+
+  .week-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .week-body {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .week-body ul {
+    margin: 0.4rem 0 0 1.2rem;
+  }
+
+  .week-body li {
+    margin-bottom: 0.25rem;
+  }
+
+  .colony-status {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .colony-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+
+  .colony-tag.mother { background: #FFF3D4; color: #B8860B; border-color: #E8C547; }
+  .colony-tag.split1 { background: #E8F2E5; color: #4A7C3F; border-color: #8FBF84; }
+  .colony-tag.split2 { background: #F0E4F0; color: #8B5E8B; border-color: #C4A0C4; }
+
+  .tip-box {
+    background: var(--honey-glow);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    border: 1px solid rgba(212,146,11,0.2);
+  }
+
+  .tip-box .tip-title {
+    font-weight: 700;
+    color: var(--honey);
+    margin-bottom: 0.3rem;
+  }
+
+  .fallback-box {
+    background: var(--alert-light);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    border: 1px solid rgba(192,57,43,0.15);
+  }
+
+  .fallback-box .tip-title {
+    font-weight: 700;
+    color: var(--alert);
+    margin-bottom: 0.3rem;
+  }
+
+  .summary-section {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--warm-brown) 100%);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .summary-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--comb);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .summary-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+  }
+
+  .summary-item .s-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    margin-bottom: 0.2rem;
+  }
+
+  .summary-item .s-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--comb);
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 500px) {
+    .hero h1 { font-size: 1.7rem; }
+    .hero-stats { gap: 0.75rem; }
+    .summary-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1><span class="bee-icon">🐝</span> Säsongsschema 2026</h1>
+    <p class="subtitle">Från 1 till 3 samhällen – redo för ljungdraget</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="number">1 → 3</div>
+        <div class="label">Samhällen</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">v.18–35</div>
+        <div class="label">Aktiv period</div>
+      </div>
+      <div class="hero-stat">
+        <div class="number">395 kr</div>
+        <div class="label">1 köpt drottning</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+
+  <!-- FAS 0: ANTECKNINGAR 2026 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">0</div>
+      <div>
+        <div class="phase-title">Anteckningar 2026</div>
+        <div class="phase-dates">Vecka 17 · April</div>
+      </div>
+    </div>
+
+    <div class="week-card" id="anteckningar-april">
+      <div class="week-label">Tor 16 apr (v.16) <span class="badge badge-check">Status</span></div>
+      <div class="week-title">Status modersamhället efter vintern</div>
+      <div class="week-body">
+        <ul>
+          <li><strong>Stödmatning:</strong> ca 5 L Dulcofruct flytande foder + 1 kg fast foder + en mindre mängd honung sedan vintern (samhället hade nästan helt slut på mat).</li>
+          <li><strong>Senaste kontroll (v.16):</strong> ca 5 ramar med täckt yngel. Inga andra yngelstadier observerade vid det tillfället. Ingen puckelyngel.</li>
+          <li><strong>Aktivitet:</strong> bina drar ner foder effektivt och bär in mycket pollen.</li>
+          <li><strong>Utrymme:</strong> en extra låda med 10 utbyggda ramar redan på sedan flera veckor. En tom utbyggd ram placerad mitt i yngelklotet för att stimulera drottningen.</li>
+          <li><strong>Drottning:</strong> parad drottning beställd av Robert Jonasson, Möckleryd. Hämtas runt 20 juni (395 kr).</li>
+          <li><strong>Bortrest:</strong> 3–15 maj. Inga möjligheter till tillsyn under perioden.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card critical" id="kontroll-fore-resa">
+      <div class="week-label">Fre 24 apr (v.17) kl 15 <span class="badge badge-critical">Diagnos</span></div>
+      <div class="week-title">Kontroll före resa – leta ägg & drottningceller</div>
+      <div class="week-body">
+        Mål: bekräfta att drottningen är aktiv och kartlägg svärmningsrisk inför 12 dagar utan tillsyn.
+        <ul>
+          <li><strong>Steg 1 — den centrala tomma ramen först.</strong> Om drottningen är aktiv har hon nästan garanterat lagt ägg där. Snabbaste bekräftelsen.</li>
+          <li><strong>Steg 2 — ägg och öppet yngel på övriga ynglramar.</strong> Luta ramen mot solen, använd lupp om det behövs. Leta efter ägg (vita riskorn) och larver i olika storlekar.</li>
+          <li><strong>Steg 3 — drottningceller.</strong> Kontrollera underkanter och sidor på ramarna efter spelceller eller faktiska celler med larv/täckta.</li>
+          <li><strong>Steg 4 — fodersituation.</strong> Bedöm om stödmatningen ska upphöra (sannolikt ja, med tanke på pollenintaget).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">🔍 Tre scenarier och åtgärd</div>
+      <ul>
+        <li><strong>Allt OK</strong> (ägg + öppet yngel + inga drottningceller): res lugnt. Delning 1 enligt plan 16 maj.</li>
+        <li><strong>Drottningceller med larv eller täckta celler:</strong> svärmning är sannolik under bortavaron. Akut delning före avresan blir nödvändig — det blir en tidigarelagd "delning 1".</li>
+        <li><strong>Inga ägg eller öppet yngel:</strong> drottningen kan vara borta. Måste lösas före resan: ge ram med ägg från annan biodlare för nödcell, köp paraddrottning för snabb leverans, eller acceptera att treplanen blir tvåplan.</li>
+      </ul>
+    </div>
+
+    <div class="week-card action" id="resultat-24-apr">
+      <div class="week-label">Fre 24 apr (v.17) <span class="badge badge-action">✓ Utfört</span></div>
+      <div class="week-title">Resultat: drottningen i högform</div>
+      <div class="week-body">
+        <ul>
+          <li><strong>Centrala ramen:</strong> full med ägg.</li>
+          <li><strong>Yngel i alla stadier</strong> (ägg, larv, täckt) – drottningen lägger jämnt och bra.</li>
+          <li><strong>7–8 ramar med yngel/ägg</strong> totalt.</li>
+          <li><strong>12–13 ramar bin</strong> – samhället täcker hela två lågnormallådor väl.</li>
+          <li><strong>Inga drottningceller.</strong> Inga drönare än, så svärmningsrisken bedöms som låg fram tills drönarna är på vingarna.</li>
+          <li><strong>Lugnare temperament</strong> än vid förra kontrollen, hög flygaktivitet, mycket pollen kommer in.</li>
+          <li><strong>Foder:</strong> uppskattningsvis 2 ramar foder kvar. Inte akut, men kan bli tajt under 12 dagar borta med 7–8 ynglramar.</li>
+          <li><strong>Utrymme:</strong> bina lagrar redan mat i den övre lådan – bra naturligt "honungstak" på plats.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card action" id="fodring-25-apr">
+      <div class="week-label">Lör 25 apr <span class="badge badge-action">Åtgärd</span></div>
+      <div class="week-title">Mindre fodring idag</div>
+      <div class="week-body">
+        Liten startfodring idag för att hålla samhället mätt fram till snabbkontrollen 1 maj. Bina drog senast ner 3 liter på under två dagar, så detta går smidigt.
+        <ul>
+          <li>Mindre mängd sockerlösning 1:1 (eller motsvarande Dulcofruct).</li>
+          <li>1:1 signalerar vår – stimulerar inte invintringsbeteende.</li>
+          <li>Lagras i övre lådan där bina redan bygger förråd.</li>
+          <li>Påfyllning sker i samband med snabbkontrollen 1 maj.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card critical" id="snabbkontroll-1-maj">
+      <div class="week-label">Fre 1 maj (v.18) kl 15 <span class="badge badge-critical">Åtgärd · 30 min</span></div>
+      <div class="week-title">Snabbkontroll, foderpåfyllning & ny ram</div>
+      <div class="week-body">
+        Sista besöket före avresan 3 maj. Kombinerat besök på ca 30 min inkl. förberedelser. Bina är aktiva och drar ner foder snabbt, så det går smidigt.
+        <ul>
+          <li><strong>Snabb cellkoll:</strong> har drottningceller dragits sedan 24/4? Drönare på väg?</li>
+          <li><strong>Foderläge:</strong> har bina tagit ner och lagrat startfodringen från 25/4?</li>
+          <li><strong>Ny tomram:</strong> tryck in ytterligare en utbyggd ram mitt i ynglkärnan för att stimulera fortsatt äggläggning. Äggen som läggs nu hinner bli täckta innan hemkomst 15 maj.</li>
+          <li><strong>Foderpåfyllning:</strong> fyll på den isolerade cellplastautomaten. Den får sitta kvar under bortavaron som säkerhetsnät – täcker en eventuell regnvecka utan att någon behöver vara på plats.</li>
+          <li><strong>Vid drottningceller:</strong> tidigarelägg delning 1.</li>
+        </ul>
+      </div>
+    </div>
+      <div class="week-label">Fre 1 maj (v.18) kl 15 <span class="badge badge-check">Snabbkontroll</span></div>
+      <div class="week-title">Snabbkontroll inför resa (preliminär)</div>
+      <div class="week-body">
+        Sista möjligheten till tillsyn före avresan 3 maj. Räknar inte med kallare väder, så fokus är snabb verifiering med eventuell snabb åtgärd.
+        <ul>
+          <li>Kort koll på den centrala ramen — fortsatt äggläggning?</li>
+          <li>Snabb skanning efter drottningceller (svärmningsrisk under 12 dagar borta).</li>
+          <li>Bedöm om ytterligare expansionsutrymme behövs.</li>
+        </ul>
+        <em>Innehåll och åtgärder uppdateras 24/4 utifrån vad första kontrollen visar.</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAS 1 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">1</div>
+      <div>
+        <div class="phase-title">Förberedelse & första delning</div>
+        <div class="phase-dates">Vecka 18–21 · Maj</div>
+      </div>
+    </div>
+
+    <div class="week-card action" id="delning-1">
+      <div class="week-label">Lör 16 maj (v.20) <span class="badge badge-action">★ Delning 1</span></div>
+      <div class="week-title">Bedöm samhälle & första delningen</div>
+      <div class="week-body">
+        <ul>
+          <li>Samhället bör täcka minst 10 ramar med bin</li>
+          <li>Kontrollera att det finns ägg och ungt yngel (drottningen är aktiv)</li>
+          <li>Finns drönare/drönaryngel? Notera!</li>
+          <li>Flytta 4–5 ramar med bin, yngel (inkl. ägg!) och foder till ny kupa</li>
+          <li><strong>Drottningen stannar i modersamhället</strong></li>
+          <li>Avläggaren placeras minst 2–3 meter bort, eller på annan bigårdsplats</li>
+          <li>Bina märker inom timmar att de saknar drottning och börjar dra celler</li>
+          <li>Stör inte avläggaren – låt dem jobba i fred</li>
+        </ul>
+        <div class="colony-status">
+          <span class="colony-tag mother">Modersamhälle</span>
+          <span class="colony-tag split1">Avläggare 1 (drar drottning)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card" id="reservdag" style="border-left-color: #999;">
+      <div class="week-label">Lör 23 maj (v.21) <span class="badge" style="background:#eee;color:#666;">Reservdag</span></div>
+      <div class="week-title">Reservdag: Delning 1</div>
+      <div class="week-body">
+        Om vädret inte tillät delning förra lördagen – gör den idag. Samma instruktioner som ovan.
+      </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">💡 Tips: Tidsfördel</div>
+      Du gör denna delning 3–4 veckor innan köpta drottningar finns tillgängliga. Det ger avläggare 1 ett rejält försprång jämfört med att vänta.
+    </div>
+  </div>
+
+  <!-- FAS 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">2</div>
+      <div>
+        <div class="phase-title">Kontroll & väntan</div>
+        <div class="phase-dates">Vecka 23–24 · Juni</div>
+      </div>
+    </div>
+
+    <div class="week-card" id="kontroll-celler">
+      <div class="week-label">Ons 3 juni (v.23) <span class="badge badge-check">Kontroll</span></div>
+      <div class="week-title">Kolla drottningceller i avläggare 1</div>
+      <div class="week-body">
+        <ul>
+          <li>Försiktig inspektion – finns täckta drottningceller? Bra!</li>
+          <li>Lämna 2–3 fina celler, bryt övriga om du vill</li>
+          <li>Drottningen kläcks ca dag 16 från äggläggning</li>
+          <li><strong>Rör inte avläggaren igen förrän v.25</strong></li>
+        </ul>
+        <div class="colony-status">
+          <span class="colony-tag mother">Modersamhälle (växer)</span>
+          <span class="colony-tag split1">Avläggare 1 (drottningceller)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card" id="kontroll-modersamhalle">
+      <div class="week-label">Tor 11 juni (v.24) <span class="badge badge-check">Kontroll</span></div>
+      <div class="week-title">Kontrollera modersamhällets återhämtning</div>
+      <div class="week-body">
+        <ul>
+          <li>Modersamhället bör nu täcka 7–8+ ramar igen</li>
+          <li>Verifiera god äggläggning – samhället måste vara starkt nog för delning 2</li>
+          <li>Bekräfta att din köpta drottning levereras enligt plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAS 3 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">3</div>
+      <div>
+        <div class="phase-title">Andra delningen & verifiering</div>
+        <div class="phase-dates">Vecka 25–27 · Midsommar</div>
+      </div>
+    </div>
+
+    <div class="week-card action" id="delning-2">
+      <div class="week-label">Lör 20 juni (v.25) <span class="badge badge-action">★ Delning 2</span></div>
+      <div class="week-title">Andra delningen – hämta & tillsätt drottning</div>
+      <div class="week-body">
+        <ul>
+          <li><strong>Hämta drottningen</strong> hos Robert Jonasson i Möckleryd (395 kr, betalas på plats)</li>
+          <li>Dela modersamhället igen: 4–5 ramar med bin och yngel</li>
+          <li>Bryt alla drottningceller i avläggare 2</li>
+          <li>Tillsätt den köpta drottningen i utätningsbur</li>
+          <li>Bina äter sig igenom degen på 2–3 dagar och accepterar henne</li>
+          <li>Drottningen börjar lägga ägg inom en vecka</li>
+        </ul>
+        <div class="colony-status">
+          <span class="colony-tag mother">Modersamhälle</span>
+          <span class="colony-tag split1">Avläggare 1</span>
+          <span class="colony-tag split2">Avläggare 2 (köpt drottning)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-card critical" id="verifiera-avlaggare-1">
+      <div class="week-label">Ons 24 juni (v.26) <span class="badge badge-critical">Kritisk kontroll</span></div>
+      <div class="week-title">Verifiera drottning i avläggare 1</div>
+      <div class="week-body">
+        <ul>
+          <li>Nu bör den egendraggna drottningen vara parad och ha börjat lägga ägg</li>
+          <li>Leta efter: ägg i cellerna, fint äggläggarmönster</li>
+          <li>Om <strong>inga ägg</strong> efter 4 veckor: drottningen har troligen misslyckats</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fallback-box">
+      <div class="tip-title">⚠️ Fallback vid misslyckad drottning</div>
+      Om avläggare 1 saknar äggläggande drottning: slå ihop den med modersamhället (tidningspappersmetoden). Köp en andra drottning och gör om delningen. Du har fortfarande tid!
+    </div>
+  </div>
+
+  <!-- FAS 4 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">4</div>
+      <div>
+        <div class="phase-title">Uppbyggnad</div>
+        <div class="phase-dates">Vecka 27–31 · Juli</div>
+      </div>
+    </div>
+
+    <div class="week-card" id="sluta-fodra">
+      <div class="week-label">Vecka 27–31 <span class="badge badge-check">Tillväxt</span></div>
+      <div class="week-title">Alla tre samhällen bygger upp sig</div>
+      <div class="week-body">
+        <ul>
+          <li>Inspektera varannan vecka – kontrollera äggläggning och tillväxt</li>
+          <li>Fodra avläggarna med sockerlösning om de behöver hjälp (1:1)</li>
+          <li>Utöka med ramar/lådor efter behov – ge dem plats att växa</li>
+          <li>Behandla mot varroa om nödvändigt (t.ex. myrsyra)</li>
+          <li><strong>Sluta fodra senast ons 22 juli (v.30)</strong> inför ljungdraget!</li>
+        </ul>
+        <div class="colony-status">
+          <span class="colony-tag mother">Modersamhälle 📈</span>
+          <span class="colony-tag split1">Avläggare 1 📈</span>
+          <span class="colony-tag split2">Avläggare 2 📈</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">💡 Mål vecka 31</div>
+      Alla tre samhällen bör täcka minst 7–8 ramar med bin. Modersamhället bör vara starkast och kan redan ha skattlådor.
+    </div>
+  </div>
+
+  <!-- FAS 5 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-number">5</div>
+      <div>
+        <div class="phase-title">Ljungdraget</div>
+        <div class="phase-dates">Vecka 32–36 · Augusti–September</div>
+      </div>
+    </div>
+
+    <div class="week-card heather" id="ljungdrag">
+      <div class="week-label">Lör 8 aug (v.32) <span class="badge badge-heather">Ljung</span></div>
+      <div class="week-title">Förbered för ljungdraget</div>
+      <div class="week-body">
+        <ul>
+          <li>Bedöm vilka samhällen som är starka nog (8+ ramar)</li>
+          <li>Sätt på skattlådor med tomma ramar (ljunghonung kräver pressning eller specialslunga)</li>
+          <li>Flytta kuporna till ljunghed om det inte finns ljung i närområdet</li>
+          <li>Svagare avläggare kan stanna hemma – de får fokusera på uppbyggnad inför vintern</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card heather">
+      <div class="week-label">Vecka 34–36 <span class="badge-heather">Skörd</span></div>
+      <div class="week-title">Ljungskörd & höstförberedelser</div>
+      <div class="week-body">
+        <ul>
+          <li>Skörda ljunghonung när draget avtar</li>
+          <li>Börja invintringsfodring – alla tre samhällen behöver 15–18 kg foder</li>
+          <li>Varroabehandling efter skörd</li>
+          <li>Tre samhällen redo för vintern! 🎉</li>
+        </ul>
+        <div class="colony-status">
+          <span class="colony-tag mother">Modersamhälle ✓</span>
+          <span class="colony-tag split1">Samhälle 2 ✓</span>
+          <span class="colony-tag split2">Samhälle 3 ✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMMANFATTNING -->
+  <div class="summary-section">
+    <h2>🍯 Sammanfattning</h2>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="s-label">Delning 1</div>
+        <div class="s-value">v.20 (16 maj)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-label">Delning 2</div>
+        <div class="s-value">v.25 (20 juni)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-label">Köpt drottning</div>
+        <div class="s-value">1 st (395 kr)</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-label">Ljungdrag</div>
+        <div class="s-value">v.32–36 (aug)</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer-note">
+    Tiderna är anpassade för södra/mellersta Sverige. Anpassa 1–2 veckor senare för norra Sverige. Lycka till med säsongen!
+  </p>
+
+</div>
+
+</body>
+</html>

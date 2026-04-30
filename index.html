@@ -15,10 +15,13 @@
     --cream: #FFF9F0;
     --green: #4A7C3F;
     --green-light: #E8F2E5;
+    --heather: #8B5E8B;
+    --heather-light: #F0E4F0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); line-height: 1.6; min-height: 100vh; }
+
   .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--warm-brown) 100%); color: var(--cream); padding: 3rem 1.5rem 2.5rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,146,11,0.15) 0%, transparent 70%); border-radius: 50%; }
   .hero-content { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
@@ -29,27 +32,35 @@
   .hero-stat { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 0.7rem 1rem; backdrop-filter: blur(10px); }
   .hero-stat .number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--comb); }
   .hero-stat .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+
   .container { max-width: 700px; margin: 0 auto; padding: 1.5rem; }
+
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--warm-brown); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--honey); }
-  .card-link { display: block; background: white; border-radius: 12px; padding: 1.2rem; margin-bottom: 0.75rem; border-left: 4px solid var(--honey); box-shadow: 0 1px 4px rgba(0,0,0,0.06); text-decoration: none; color: var(--dark); transition: transform 0.2s, box-shadow 0.2s; }
+
+  .card-link { display: block; background: white; border-radius: 12px; padding: 1.1rem 1.2rem; margin-bottom: 0.6rem; border-left: 4px solid var(--honey); box-shadow: 0 1px 4px rgba(0,0,0,0.06); text-decoration: none; color: var(--dark); transition: transform 0.2s, box-shadow 0.2s; display: flex; align-items: center; gap: 1rem; }
   .card-link:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .card-link.action { border-left-color: var(--green); background: linear-gradient(135deg, white 85%, var(--green-light)); }
-  .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--dark); margin-bottom: 0.4rem; }
-  .card-desc { font-size: 0.85rem; color: #666; }
+  .card-link.green { border-left-color: var(--green); }
+  .card-link.heather { border-left-color: var(--heather); }
+  .card-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .card-text .card-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--dark); }
+  .card-text .card-desc { font-size: 0.8rem; color: #777; margin-top: 0.1rem; }
+
+  /* Bigård */
   .apiary-section { background: linear-gradient(135deg, var(--dark) 0%, var(--warm-brown) 100%); color: var(--cream); border-radius: 14px; padding: 1.5rem; margin-top: 2rem; }
   .apiary-section h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--comb); }
-  .apiary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .apiary-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 0.75rem; }
-  .apiary-item .a-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 0.2rem; }
-  .apiary-item .a-value { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--comb); }
-  .apiary-item .a-note { font-size: 0.75rem; opacity: 0.75; margin-top: 0.15rem; }
-  .apiary-item.wide { grid-column: 1 / -1; }
+  .apiary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.82rem; }
+  .apiary-row { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem 0.8rem; }
+  .apiary-row .a-label { opacity: 0.65; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.15rem; }
+  .apiary-row .a-value { color: var(--comb); font-weight: 600; }
+  .apiary-row.wide { grid-column: 1 / -1; }
+
   .footer-note { text-align: center; font-size: 0.75rem; color: #999; margin-top: 2rem; padding-bottom: 2rem; font-style: italic; }
+
   @media (max-width: 500px) {
     .hero h1 { font-size: 1.7rem; }
     .hero-stats { gap: 0.75rem; }
     .apiary-grid { grid-template-columns: 1fr; }
-    .apiary-item.wide { grid-column: 1; }
+    .apiary-row.wide { grid-column: 1; }
   }
 </style>
 </head>
@@ -80,73 +91,78 @@
 
   <div class="section-title">Dokument</div>
 
-  <a class="card-link action" href="biodlingsschema-2026.html">
-    <div class="card-title">Biodlingsschema 2026</div>
-    <div class="card-desc">Veckoplanering: från 1 till 3 samhällen, delningar, kontroller, ljungdrag och invintring. Uppdateras löpande med anteckningar och resultat.</div>
+  <a class="card-link green" href="biodlingsschema-2026.html">
+    <span class="card-icon">📅</span>
+    <div class="card-text">
+      <div class="card-title">Biodlingsschema 2026</div>
+      <div class="card-desc">Säsongsplanering — delningar, kontroller, ljungdrag, invintring</div>
+    </div>
   </a>
 
-  <a class="card-link" href="mal-och-strategi.html">
-    <div class="card-title">Mål & strategi</div>
-    <div class="card-desc">Övergripande mål för biodlingen: antal samhällen, honungsproduktion, rasval, varroastrategi och långsiktig plan.</div>
+  <a class="card-link" href="observationslogg.html">
+    <span class="card-icon">📓</span>
+    <div class="card-text">
+      <div class="card-title">Observationslogg</div>
+      <div class="card-desc">Löpande anteckningar per besök</div>
+    </div>
   </a>
 
+  <a class="card-link heather" href="mal-och-strategi.html">
+    <span class="card-icon">🎯</span>
+    <div class="card-text">
+      <div class="card-title">Mål & strategi</div>
+      <div class="card-desc">Övergripande mål, strategi och idéer</div>
+    </div>
+  </a>
+
+  <a class="card-link" href="material.html">
+    <span class="card-icon">🗃️</span>
+    <div class="card-text">
+      <div class="card-title">Material & inventering</div>
+      <div class="card-desc">Utrustning, inköpsbehov inför expansion och invintring</div>
+    </div>
+  </a>
+
+  <!-- Bigård -->
   <div class="apiary-section">
     <h2>🏕️ Om bigården</h2>
     <div class="apiary-grid">
-
-      <div class="apiary-item">
+      <div class="apiary-row">
         <div class="a-label">Plats</div>
-        <div class="a-value">Södra Skruv</div>
-        <div class="a-note">Uppvidinge kommun, Småland</div>
+        <div class="a-value">Södra Skruv, Uppvidinge</div>
       </div>
-
-      <div class="apiary-item">
+      <div class="apiary-row">
         <div class="a-label">Start</div>
         <div class="a-value">Vintern 2023</div>
-        <div class="a-note">Säsong 2026 är tredje säsongen</div>
       </div>
-
-      <div class="apiary-item">
+      <div class="apiary-row">
         <div class="a-label">Kupformat</div>
-        <div class="a-value">Lågnormal (LN)</div>
-        <div class="a-note">10 ramar per låda, staplingstyp</div>
+        <div class="a-value">Lågnormal · 10 ramar · stapel</div>
       </div>
-
-      <div class="apiary-item">
+      <div class="apiary-row">
         <div class="a-label">Ras</div>
         <div class="a-value">Buckfast</div>
-        <div class="a-note">Köpt drottning tillkommer v.25 2026</div>
       </div>
-
-      <div class="apiary-item">
-        <div class="a-label">Omgivning</div>
-        <div class="a-value">Skogslandskap</div>
-        <div class="a-note">Barrskog dominerar, björk och asp. Torvmarkslandskap — naturligt ljungbärande och hedartat</div>
-      </div>
-
-      <div class="apiary-item">
-        <div class="a-label">Smittorisk</div>
-        <div class="a-value">Låg</div>
-        <div class="a-note">Isolerat läge, begränsad kontakt med andra bigårdar</div>
-      </div>
-
-      <div class="apiary-item">
+      <div class="apiary-row">
         <div class="a-label">Drag</div>
-        <div class="a-value">Ljung (aug)</div>
-        <div class="a-note">Magert sommardrag, rikt ljungdrag v.32–35</div>
+        <div class="a-value">Ljung v.32–35 · magert sommardrag</div>
       </div>
-
-      <div class="apiary-item">
+      <div class="apiary-row">
+        <div class="a-label">Smittorisk</div>
+        <div class="a-value">Låg · isolerat läge</div>
+      </div>
+      <div class="apiary-row wide">
+        <div class="a-label">Omgivning</div>
+        <div class="a-value">Barrskog, björk, asp · torvmarkslandskap · naturligt ljungbärande</div>
+      </div>
+      <div class="apiary-row wide">
         <div class="a-label">Varroastrategi</div>
-        <div class="a-value">Oxalsyra</div>
-        <div class="a-note">En behandling per år i yngelfritt tillstånd (okt–nov)</div>
+        <div class="a-value">Oxalsyra · en behandling per år i yngelfritt tillstånd (okt–nov)</div>
       </div>
-
-      <div class="apiary-item wide">
-        <div class="a-label">Erfarenheter & förluster</div>
-        <div class="a-value" style="font-size:0.85rem;margin-bottom:0.3rem;">Sommaren 2024: förlust av ett samhälle (puckelsamhälle). Vintern 2025–26: förlust av ett samhälle (svält) — motiverar noggrann foderdisciplin inför varje säsong.</div>
+      <div class="apiary-row wide">
+        <div class="a-label">Förluster</div>
+        <div class="a-value">Sommar 2024: puckelsamhälle. Vinter 2025–26: svält — motiverar noggrann foderdisciplin</div>
       </div>
-
     </div>
   </div>
 

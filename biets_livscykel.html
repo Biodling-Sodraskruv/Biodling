@@ -72,7 +72,7 @@
   .hero .subtitle { font-size: 0.95rem; font-weight: 300; opacity: 0.82; }
 
   /* ── CONTAINER ── */
-  .container { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
 
   .section-title {
     font-family: 'Playfair Display', serif;
@@ -105,7 +105,7 @@
     right: 0;
     top: 0; bottom: 0;
     width: 2px;
-    background: var(--honey);
+    background: var(--warm-brown);
   }
 
   /* Tick-wrapper: top = exakt dagsgräns, height=0, overflow visible */
@@ -125,7 +125,7 @@
   .ruler-tick .tick-label {
     font-size: 0.56rem;
     font-weight: 700;
-    color: var(--warm-brown);
+    color: var(--dark);
     line-height: 1;
     white-space: nowrap;
     margin-right: 4px;
@@ -137,12 +137,12 @@
   /* Horisontellt streck – sitter vid top-kanten (height:0 på parent) */
   .ruler-tick .tick-line {
     height: 1px;
-    background: var(--honey);
+    background: var(--warm-brown);
     flex-shrink: 0;
     margin-top: 0;
   }
 
-  .ruler-tick.minor .tick-line { width: 5px; opacity: 0.45; }
+  .ruler-tick.minor .tick-line { width: 5px; opacity: 0.6; }
   .ruler-tick.major .tick-line { width: 10px; }
 
   /* Tre kort */
@@ -157,7 +157,18 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+    position: relative;
   }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 3px;
+    pointer-events: none;
+  }
+  #card-d::after  { background: var(--col-d); opacity: 0.35; }
+  #card-a::after  { background: var(--col-a); opacity: 0.35; }
+  #card-dr::after { background: var(--col-dr); opacity: 0.35; }
 
   .card-header {
     padding: 8px 4px 7px;
@@ -261,6 +272,17 @@
   .swatch { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.12); }
 
   /* ── FOOTER ── */
+  .dca-note {
+    margin-top: 1.5rem;
+    padding: 0.7rem 1rem;
+    background: var(--honey-glow);
+    border-left: 3px solid var(--honey);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    color: var(--warm-brown);
+    line-height: 1.5;
+  }
+
   .footer-note {
     text-align: center;
     font-size: 0.75rem;
@@ -304,7 +326,7 @@
       <!-- DROTTNING -->
       <div class="card" id="card-d">
         <div class="card-header drottning">
-          <span class="emoji">👑</span>Drottning
+          <span class="emoji">👑♀</span>Drottning
         </div>
         <div class="phase bg-agg"   data-start="0"  data-end="3">
           <div class="phase-bar bar-agg"></div>
@@ -374,7 +396,7 @@
       <!-- ARBETSBI -->
       <div class="card" id="card-a">
         <div class="card-header arbetsbi">
-          <span class="emoji">🐝</span>Arbetsbi
+          <span class="emoji">🐝♀</span>Arbetsbi
         </div>
         <div class="phase bg-agg"   data-start="0"  data-end="3">
           <div class="phase-bar bar-agg"></div>
@@ -389,7 +411,7 @@
           <div class="phase-content">
             <div class="phase-days">Dag 4–9</div>
             <div class="phase-label">Larv</div>
-            <div class="phase-note">Royal jelly + bi-bröd</div>
+            <div class="phase-note">Royal jelly, sedan bibröd (pollen + honung)</div>
           </div>
         </div>
         <div class="phase bg-operk" data-start="9"  data-end="10">
@@ -460,14 +482,14 @@
       <!-- DRÖNARE -->
       <div class="card" id="card-dr">
         <div class="card-header dronare">
-          <span class="emoji">🐛</span>Drönare
+          <span class="emoji">🐝♂</span>Drönare
         </div>
         <div class="phase bg-agg"    data-start="0"  data-end="3">
           <div class="phase-bar bar-agg"></div>
           <div class="phase-content">
             <div class="phase-days">Dag 0–3</div>
             <div class="phase-label">Ägg</div>
-            <div class="phase-note">Obesfruktat ägg</div>
+            <div class="phase-note">Obefruktat ägg</div>
           </div>
         </div>
         <div class="phase bg-larv"   data-start="3"  data-end="10">
@@ -475,7 +497,7 @@
           <div class="phase-content">
             <div class="phase-days">Dag 4–10</div>
             <div class="phase-label">Larv</div>
-            <div class="phase-note">Matas av arbetsbin</div>
+            <div class="phase-note">Royal jelly, sedan bibröd (pollen + honung)</div>
           </div>
         </div>
         <div class="phase bg-operk"  data-start="10" data-end="11">
@@ -491,7 +513,7 @@
           <div class="phase-content">
             <div class="phase-days">Dag 12–24</div>
             <div class="phase-label">Puppa</div>
-            <div class="phase-note">Längst av de tre</div>
+            <div class="phase-note">Metamorfos</div>
           </div>
         </div>
         <div class="phase bg-kläckt" data-start="24" data-end="25">
@@ -566,7 +588,11 @@
     </div>
   </div>
 
-  <p class="footer-note">Biodling Södra Skruv &middot; Uppvidinge kommun &middot; Säsongen 2026</p>
+    <div class="dca-note">
+    <strong>DCA</strong> – <em>Drone Congregation Area</em>: specifika platser i luften, ofta 10–40 meter högt, där drönare från olika samhällen samlas och väntar på jungfrudrottningar för parning. Platserna återanvänds år efter år.
+  </div>
+
+<p class="footer-note">Biodling Södra Skruv &middot; Uppvidinge kommun &middot; Säsongen 2026</p>
 
 </div><!-- /container -->
 

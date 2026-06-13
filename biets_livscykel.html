@@ -72,7 +72,7 @@
   .hero .subtitle { font-size: 0.95rem; font-weight: 300; opacity: 0.82; }
 
   /* ── CONTAINER ── */
-  .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+  .container { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 
   .section-title {
     font-family: 'Playfair Display', serif;
@@ -87,7 +87,7 @@
   /* ── LINJAL + KORT-LAYOUT ── */
   .lifecycle-wrap {
     display: flex;
-    gap: 10px;
+    gap: 4px;
     align-items: flex-start;
     margin-bottom: 2rem;
   }
@@ -95,18 +95,12 @@
   /* Vertikal dagslinjal */
   .ruler {
     flex-shrink: 0;
-    width: 34px;
+    width: 20px;
     position: relative;
   }
 
-  /* Linjen längs högerkanten */
-  .ruler-line {
-    position: absolute;
-    right: 0;
-    top: 0; bottom: 0;
-    width: 2px;
-    background: var(--warm-brown);
-  }
+  /* Vertikal linje borttagen */
+  .ruler-line { display: none; }
 
   /* Tick-wrapper: top = exakt dagsgräns, height=0, overflow visible */
   .ruler-tick {
@@ -144,6 +138,16 @@
 
   .ruler-tick.minor .tick-line { width: 5px; opacity: 0.6; }
   .ruler-tick.major .tick-line { width: 10px; }
+
+  /* Höger linjal */
+  .ruler-right .ruler-tick {
+    left: 0;
+    right: auto;
+    justify-content: flex-start;
+  }
+  .ruler-right .ruler-tick .tick-line {
+    order: 1;
+  }
 
   /* Tre kort */
   .cards {
@@ -301,6 +305,11 @@
 <body>
 
 <!-- HERO -->
+  <nav style="background:rgba(44,24,16,0.97); padding:0.5rem 1.5rem; text-align:right; font-size:0.82rem;">
+    <a href="index.html" style="color:var(--comb); text-decoration:none; font-family:'Source Sans 3', sans-serif; font-weight:600; letter-spacing:0.03em;">
+      ← Huvudsida
+    </a>
+  </nav>
 <div class="hero">
   <div class="hero-content">
     <h1><span class="bee-icon">🐝</span>Biets livscykel</h1>
@@ -550,6 +559,11 @@
       </div>
 
     </div><!-- /cards -->
+
+    <!-- Höger linjal -->
+    <div class="ruler ruler-right" id="rulerRight">
+      <div class="ruler-line"></div>
+    </div>
   </div><!-- /lifecycle-wrap -->
 
   <!-- SNABBFAKTA -->
@@ -640,7 +654,7 @@
 
     for (let day = 0; day <= totalDays; day++) {
       const topPx   = headerH + day * pxPerDay;
-      const isMajor = (day % 5 === 0);
+      const isMajor = (day % 7 === 0);
 
       const tick = document.createElement('div');
       tick.className = 'ruler-tick ' + (isMajor ? 'major' : 'minor');
@@ -653,6 +667,22 @@
 
       tick.innerHTML = labelHTML + `<div class="tick-line"></div>`;
       ruler.appendChild(tick);
+    }
+
+    // Höger linjal – samma struktur men inga etiketter
+    const rulerRight = document.getElementById('rulerRight');
+    if (rulerRight) {
+      rulerRight.style.height = rulerH + 'px';
+      rulerRight.querySelectorAll('.ruler-tick').forEach(t => t.remove());
+      for (let day = 0; day <= totalDays; day++) {
+        const topPx   = headerH + day * pxPerDay;
+        const isMajor = (day % 7 === 0);
+        const tick = document.createElement('div');
+        tick.className = 'ruler-tick ' + (isMajor ? 'major' : 'minor');
+        tick.style.top = topPx + 'px';
+        tick.innerHTML = `<div class="tick-line"></div>`;
+        rulerRight.appendChild(tick);
+      }
     }
   }
 

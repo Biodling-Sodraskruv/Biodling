@@ -26,6 +26,7 @@
     --kläckt: #A5D6A7;
     --ung:    #57A85B;
     --mogen:  #2E7D32;
+    --parning: #6A3572;
 
     /* Kortfärger */
     --col-d:  #8B1A1A;
@@ -195,7 +196,7 @@
   .phase-content {
     flex: 1;
     padding: 5px 6px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 2px solid rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -239,6 +240,8 @@
   .bg-kläckt { background: #F1F8F1; }
   .bg-ung    { background: #E8F5E9; }
   .bg-mogen  { background: #E0F0E1; }
+  .bar-parning { background: var(--parning); }
+  .bg-parning  { background: #F0E4F0; }
 
   /* ── SNABBFAKTA-TABELL ── */
   .compare {
@@ -384,8 +387,8 @@
             <div class="phase-note">Rör sig i kupan, förbereder parning</div>
           </div>
         </div>
-        <div class="phase bg-mogen" data-start="23" data-end="28">
-          <div class="phase-bar bar-mogen"></div>
+        <div class="phase bg-parning" data-start="23" data-end="28">
+          <div class="phase-bar bar-parning"></div>
           <div class="phase-content">
             <div class="phase-days">Dag 24–28</div>
             <div class="phase-label">Parningsflygning</div>

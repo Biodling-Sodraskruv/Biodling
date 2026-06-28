@@ -40,8 +40,9 @@
   [id] { scroll-margin-top: 1rem; }
   body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); line-height: 1.6; min-height: 100vh; }
 
-  .topbar { background: var(--dark); padding: 0.5rem 1.5rem; text-align: right; }
+  .topbar { background: var(--dark); padding: 0.5rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
   .topbar a { color: var(--comb); font-size: 0.8rem; text-decoration: none; }
+  .topbar-revision { font-size: 0.7rem; color: #6a5a4a; letter-spacing: 0.03em; }
 
   .hero { background: linear-gradient(135deg, var(--dark) 0%, var(--warm-brown) 100%); color: var(--cream); padding: 3rem 1.5rem 2.5rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,146,11,0.15) 0%, transparent 70%); border-radius: 50%; }
@@ -191,7 +192,7 @@
 </head>
 <body>
 
-<div class="topbar"><a href="index.html">← Översikt</a></div>
+<div class="topbar"><span class="topbar-revision">Version: 2026-06-28</span><a href="index.html">← Översikt</a></div>
 
 <div class="hero">
   <div class="hero-content">

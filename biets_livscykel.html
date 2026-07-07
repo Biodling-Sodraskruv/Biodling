@@ -372,6 +372,91 @@
     margin-bottom: 3px;
   }
 
+  /* ── VINTERBI-TABELL (fallande) ── */
+  .winter-table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+  }
+  .winter-table table { width: 100%; border-collapse: collapse; font-size: 0.76rem; }
+  .winter-table th {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 8px 7px;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+  }
+  .winter-table td {
+    padding: 8px 7px;
+    border-bottom: 2px solid rgba(0,0,0,0.08);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .winter-table tr:last-child td { border-bottom: none; }
+  .winter-table tr:nth-child(even) td { background: var(--honey-glow); }
+  .winter-arrow {
+    color: var(--honey);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .winter-skede {
+    font-weight: 600;
+    color: var(--warm-brown);
+  }
+
+  /* ── EXPANDERBART DETAILS ── */
+  details.fold {
+    border-radius: 8px;
+    background: #F0E4F0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    border-left: 3px solid var(--heather);
+  }
+  details.fold summary {
+    padding: 11px 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--heather);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '▸';
+    transition: transform 0.2s;
+    font-size: 0.8rem;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body {
+    padding: 4px 14px 14px;
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.6;
+  }
+  details.fold .fold-body p { margin-bottom: 0.7rem; }
+  details.fold .fold-body p:last-child { margin-bottom: 0; }
+  details.fold .fold-body strong { color: var(--warm-brown); }
+
+  /* ── FAKTARUTA ── */
+  .fact-box {
+    background: var(--green-light);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    padding: 10px 13px;
+    font-size: 0.79rem;
+    color: #2d4a26;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  .fact-box strong { color: var(--green); }
+
   .footer-note {
     text-align: center;
     font-size: 0.75rem;
@@ -771,6 +856,71 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- VINTERBIET -->
+  <div class="section-title" style="margin-top:2rem">Vinterbiet</div>
+  <p style="font-size:0.82rem; color:#666; margin-bottom:1rem; line-height:1.5;">
+    Vinterbiet är inget eget kast utan ett vanligt arbetsbi med en helt annan fysiologisk inställning – sommarbiets långlivade motsvarighet, byggt för att överbrygga den kalla, blomlösa perioden.
+  </p>
+
+  <div class="winter-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Skede</th>
+          <th>Bi-typ</th>
+          <th>Roll under vintern</th>
+          <th>Funktion på våren</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="winter-arrow">↓</span> <span class="winter-skede">Sensommar</span></td>
+          <td>Sommarbi (rest)<br><small>kläckt juli–aug</small></td>
+          <td>Dör före djupvintern</td>
+          <td>Hinner inte – borta</td>
+        </tr>
+        <tr>
+          <td><span class="winter-arrow">↓</span> <span class="winter-skede">Tidig höst</span></td>
+          <td>Tidigt vinterbi<br><small>kläckt sept</small></td>
+          <td>Klotbildning, värme</td>
+          <td>Första ambin, dör mars–april</td>
+        </tr>
+        <tr>
+          <td><span class="winter-arrow">↓</span> <span class="winter-skede">Sen höst</span></td>
+          <td>Sent vinterbi<br><small>kläckt okt</small></td>
+          <td>Klotbildning, värme, sparsam matning</td>
+          <td>Bär upp samhället längst, blir ambi/byggbi</td>
+        </tr>
+        <tr>
+          <td><span class="winter-arrow">↓</span> <span class="winter-skede">Vinter</span></td>
+          <td>Drottning</td>
+          <td>Vilar i klotets kärna, minimal äggläggning</td>
+          <td>Startar äggläggning jan–feb</td>
+        </tr>
+        <tr>
+          <td><span class="winter-arrow">↓</span> <span class="winter-skede">Vår</span></td>
+          <td>Första våryngel<br><small>kläckt mars</small></td>
+          <td>—</td>
+          <td>Tar över och ersätter vinterbina</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="fold">
+    <summary>Biokemin bakom vinterbiet</summary>
+    <div class="fold-body">
+      <p>Vinterbiets långa liv styrs av proteinet <strong>vitellogenin</strong>, som lagras i fettkroppen i buken. Det fyller flera funktioner samtidigt: bygger fettreserven, stärker immunförsvaret, skyddar mot oxidativ stress och undertrycker <strong>juvenilhormonet</strong> – det hormon som annars driver biet vidare från ambi till samlare.</p>
+      <p>Så länge vitellogeninnivån är hög stannar biet i ett ungt, ambi-liknande tillstånd. När våren kommer och biet börjar samla stiger juvenilhormonet, vitellogeninet sjunker, körtlarna krymper och biet dör inom några veckor – precis som ett sommarbi. Det långlivade tillståndet är en paus, inte en permanent egenskap.</p>
+      <p><strong>Fettreserven byggs som vuxen:</strong> Det är det vuxna biet som bygger upp reserven under höstens pollenrika blomning – inte larven. Därför är pollentillgången på hösten avgörande för vinterbinas kvalitet.</p>
+      <p><strong>Varroa som hot:</strong> Varroakvalstret livnär sig direkt på fettkroppen – själva organet där vitellogenin produceras. Ett angripet samhälle får svårt att bygga funktionsdugliga vinterbin, vilket är en vanlig orsak till utebliven övervintring.</p>
+    </div>
+  </details>
+
+  <div class="fact-box">
+    <strong>Koppling till din bigård:</strong> Ljungdraget i augusti–september ger rikligt med pollen precis när vinterbina kläcks och bygger sina reserver – idealisk timing för stark övervintring på höglandet.
   </div>
 
   <div class="dca-note">
